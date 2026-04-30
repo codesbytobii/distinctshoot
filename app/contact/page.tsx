@@ -198,7 +198,7 @@ export default function ContactPage() {
 
           <div className="flex flex-col gap-6">
             {[
-              { icon: Mail, label: "Email", value: "distinctshoot@gmail.com", href: "mailto:distinctshoot@gmail.com" },
+              { icon: Mail, label: "Email", value: "distinctshoot01@gmail.com", href: "mailto:distinctshoot01@gmail.com" },
               { icon: Phone, label: "Phone", value: "+234 704 866 6024", href: "tel:+2347048666024" },
               { icon: Instagram, label: "Instagram", value: "@distinctshoot", href: "https://instagram.com/distinctshoot" },
               { icon: MapPin, label: "Location", value: "Lagos, Nigeria", href: "#" },
@@ -327,7 +327,7 @@ export default function ContactPage() {
               {/* Error */}
               {status === "error" && (
                 <p className="text-xs" style={{ color: "#e05c5c" }}>
-                  Something went wrong. Please try again or email us directly at distinctshoot@gmail.com
+                  Something went wrong. Please try again or email us directly at distinctshoot01@gmail.com
                 </p>
               )}
 
