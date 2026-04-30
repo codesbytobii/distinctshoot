@@ -1,0 +1,271 @@
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+
+const POSTS: Record<string, {
+  title: string;
+  category: string;
+  date: string;
+  readTime: string;
+  img: string;
+  intro: string;
+  body: { heading?: string; text: string }[];
+}> = {
+  "light-tells-the-truth": {
+    title: "Light Tells the Truth",
+    category: "Philosophy",
+    date: "March 2025",
+    readTime: "5 min",
+    img: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1400&q=90",
+    intro: "Why I stopped chasing the perfect golden hour and started listening to whatever light was already in the room.",
+    body: [
+      {
+        text: "There's a version of photography that's obsessed with control — perfect strobes, gelled windows, reflectors angled at 45 degrees. I spent years learning that version. I got good at it. And then one afternoon, shooting a client in her apartment, I turned all the lights off and just used the single window behind her. The image was the best thing I'd made in months.",
+      },
+      {
+        heading: "The Tyranny of the Perfect Shot",
+        text: "We carry around this idea that great light is something we have to manufacture. Golden hour. Blue hour. Studio strobes set to 1/250th. But light doesn't care about our schedules. Light exists whether we're ready for it or not — falling through venetian blinds at noon, bouncing off a white wall in a spare bedroom, coming under a doorframe in the flat blue of an overcast Lagos afternoon.",
+      },
+      {
+        text: "The photographers I admire most — Saul Leiter, Viviane Sassen, Deana Lawson — don't fight their light. They negotiate with it. They walk into a space and ask: what is this light already saying? Then they find the subject that answers.",
+      },
+      {
+        heading: "What Ambient Light Teaches You",
+        text: "When you stop bringing your own light everywhere, you start seeing differently. You notice the way fluorescent office lighting turns skin into something architectural. You notice how a single candle in a dark room creates drama that no softbox can replicate — because it's real, and the viewer knows it's real. Authenticity has its own texture.",
+      },
+      {
+        text: "Working with available light also slows you down. You can't hide behind technical perfection. You have to be still, patient, and alert. You have to wait for the moment the light does something interesting — and then you have to be fast enough to catch it. That combination of patience and reflexes is what photography actually is.",
+      },
+      {
+        heading: "A Practical Note",
+        text: "None of this means abandoning technical knowledge. Understanding how light behaves — how it wraps around a face, how it falls off with distance, how hard and soft sources create different moods — makes you a better observer of natural light, not just a better controller of artificial light. Learn the rules. Then go find a window.",
+      },
+      {
+        text: "The best portrait I ever made was in a bathroom. White walls. One bare bulb above the mirror. My client was perched on the edge of the tub in her wedding dress, laughing at something her mother said just outside the door. The light was honest. The moment was honest. That's all a photograph ever needs to be.",
+      },
+    ],
+  },
+
+  "how-to-prepare-for-your-portrait-session": {
+    title: "How to Prepare for Your Portrait Session",
+    category: "Guide",
+    date: "February 2025",
+    readTime: "7 min",
+    img: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1400&q=90",
+    intro: "Everything I wish clients knew before they walked into the studio — and how to arrive at ease.",
+    body: [
+      {
+        text: "Most people arrive to a portrait session carrying two things: excitement and nerves. The excitement I love — it means you care about the outcome. The nerves I understand completely. Being photographed is vulnerable. You're asked to be still, to be seen, to trust a stranger with how you look in a moment that will outlast the moment itself.",
+      },
+      {
+        text: "Over the years, I've noticed the sessions that go best share something in common: the client came prepared — not in a rigid, over-planned way, but in a way that let them arrive loose, confident, and ready to be present. Here's what that looks like.",
+      },
+      {
+        heading: "Before the Day",
+        text: "Get clear on how you want to feel in the images — not just how you want to look. Do you want to feel powerful? Tender? Playful? Serene? That feeling guides everything: the location, the wardrobe, the pace of the shoot. Share it with me before we start. It changes the conversation we have through the camera.",
+      },
+      {
+        text: "On wardrobe: bring more than you think you need. Three to five outfits minimum. Avoid heavy logos, overly trendy pieces, and anything that makes you feel self-conscious — you'll feel it in your shoulders and I'll see it in your face. Favour textures, layers, and colours that feel like you on your best day. Solid colours generally photograph better than busy patterns, but rules exist to be broken if the pattern means something to you.",
+      },
+      {
+        heading: "The Night Before",
+        text: "Sleep. Seriously. The camera sees everything, and rested skin, rested eyes, and a rested nervous system make an enormous difference. Drink water. Lay your outfits out so you're not making decisions under pressure in the morning. If you're doing hair and makeup, schedule it so you're not rushing.",
+      },
+      {
+        text: "Avoid trying new skincare products the week before. Reactions, breakouts, and redness are all harder to manage under studio lights than they look in a bathroom mirror.",
+      },
+      {
+        heading: "On the Day",
+        text: "Arrive a few minutes early. Not because I'm strict about time — I'm not — but because rushing into a session means your nervous system arrives before the rest of you. Give yourself the gift of a slow transition. Park. Walk. Breathe.",
+      },
+      {
+        text: "Tell me if something feels off. If a pose is uncomfortable, if you don't like what you're seeing in the back of the camera, if you need a break or a glass of water or five minutes of silence — say so. The best images come from genuine ease, and genuine ease comes from a genuine conversation.",
+      },
+      {
+        heading: "What to Expect",
+        text: "The first fifteen minutes of any session are the warmup. Don't judge your comfort level during this window. We're learning each other — how you hold your body, how you respond to direction, what makes you laugh without trying. By the time we're thirty minutes in, most people have completely forgotten they're being photographed. That's exactly where I want you.",
+      },
+      {
+        text: "Come curious. Come as yourself. The camera will take care of the rest.",
+      },
+    ],
+  },
+
+  "editorial-photography-in-lagos": {
+    title: "Editorial Photography in Lagos",
+    category: "Behind the Scenes",
+    date: "January 2025",
+    readTime: "6 min",
+    img: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1400&q=90",
+    intro: "The city is loud, beautiful, and unapologetic. Documenting fashion weeks and campaigns across the megacity.",
+    body: [
+      {
+        text: "Lagos does not ask for your attention. It takes it. From the moment you're in it — the traffic that hums like a living thing, the markets that spill onto every available surface, the light that hits the lagoon in the late afternoon like something arranged — the city is always performing, always in motion, always alive.",
+      },
+      {
+        text: "Shooting editorial work here is unlike anywhere else I've worked. The city is a collaborator that never turns up to the brief.",
+      },
+      {
+        heading: "The Energy Problem",
+        text: "Every editorial photographer knows the challenge of energy management on a shoot. You have a concept, a moodboard, a talent, a stylist, a MUA, a client, and a deadline. You have to hold all of that together while staying genuinely responsive to what's actually happening in front of the lens. In Lagos, you also have the city itself — unpredictable, generous, occasionally chaotic.",
+      },
+      {
+        text: "I've had shoots interrupted by sudden downpours that turned into the best frames of the day. I've had 'background extras' — strangers who wandered into shot — become the visual anchor of an entire campaign. The city teaches you to hold your plans loosely and your eyes wide open.",
+      },
+      {
+        heading: "Location as Character",
+        text: "What Lagos gives editorial photographers that few cities can match is visual range within a small geographic radius. In an afternoon, you can move from the weathered colonial architecture of Lagos Island to the glass towers of Victoria Island to the dense, layered textures of Yaba. Each neighbourhood has its own light, its own palette, its own energy.",
+      },
+      {
+        text: "I've shot fashion campaigns against the peeling walls of old government buildings that gave the images a weight and context that a studio backdrop never could. I've used the reflective surfaces of flooded roads after rain as natural fill light. The city is an infinite location library — if you're willing to look.",
+      },
+      {
+        heading: "The Emerging Industry",
+        text: "Lagos Fashion Week has changed the conversation about African fashion photography significantly over the last decade. The standard of creative direction, styling, and production has risen sharply — and with it, the demand for photographers who can operate at that level while bringing a genuinely local visual language.",
+      },
+      {
+        text: "There's a generation of Lagos-based photographers now doing work that is internationally recognised precisely because it doesn't try to imitate another tradition. It looks like here. It sounds like here. It moves like here. That's not a limitation — it's a position of extraordinary creative strength.",
+      },
+      {
+        heading: "A Note on Process",
+        text: "My approach to editorial work in Lagos starts with a scouting trip, always. I need to feel a location before I can shoot it — to understand where the light falls at what time, where the crowd thins, where the texture is. Pre-production is everything. The spontaneity that makes Lagos images sing happens within a structure that was carefully built in advance.",
+      },
+      {
+        text: "Come for the chaos. Stay for the light.",
+      },
+    ],
+  },
+
+  "the-art-of-stillness": {
+    title: "The Art of Stillness",
+    category: "Philosophy",
+    date: "December 2024",
+    readTime: "4 min",
+    img: "https://images.unsplash.com/photo-1492288991661-058aa541ff43?w=1400&q=90",
+    intro: "On patience, presence, and why the best portrait photographers know when not to press the shutter.",
+    body: [
+      {
+        text: "The most important thing I do on a portrait shoot is wait. Not passive waiting — not scrolling my phone while the subject stands there — but active, attentive waiting. The kind where you're watching everything: the set of the shoulders, the quality of the breath, the small shift in the eyes when the person in front of you stops performing and starts simply being.",
+      },
+      {
+        text: "That shift is what I'm always waiting for. And it can't be rushed.",
+      },
+      {
+        heading: "The Performance Problem",
+        text: "Everyone performs for a camera. It's reflexive, almost protective — we arrange our faces into the version of ourselves we most want to present to the world. This isn't vanity. It's vulnerability management. Being photographed is exposure, and our nervous systems respond to exposure by armoring up.",
+      },
+      {
+        text: "The photographer's job — the real job, underneath all the technical craft — is to create the conditions under which that armor becomes unnecessary. That takes time. It takes conversation, and silence, and patience, and the willingness to let a session breathe even when you feel the pressure of time.",
+      },
+      {
+        heading: "What Stillness Looks Like",
+        text: "I take a lot of frames I know I won't use. Not because I'm covering myself — but because the act of shooting creates a rhythm that helps the subject relax. The click of the shutter becomes ordinary. The camera becomes furniture. And then, somewhere in the middle of an unremarkable moment — adjusting a piece of clothing, looking slightly away, exhaling — the performance drops.",
+      },
+      {
+        text: "I've learned to feel when that moment is coming before it arrives. There's a quality of attention that shifts in the room. The subject stops thinking about how they look and starts thinking about something else entirely — a memory, a feeling, the texture of the fabric in their hands. That's when I slow my own breathing, become very still, and wait for the frame.",
+      },
+      {
+        heading: "On Not Shooting",
+        text: "Some of the best photographers I know talk about the discipline of not shooting — of choosing not to press the shutter when the moment isn't right, even when everything else is technically perfect. Light is beautiful. Composition is strong. But the eyes are absent. Don't shoot.",
+      },
+      {
+        text: "The image you don't make is as important as the one you do. Restraint is a creative act. It keeps your edit honest and your portfolio true.",
+      },
+      {
+        text: "Stillness is not the absence of action. It is action with nowhere to hide.",
+      },
+    ],
+  },
+};
+
+export function generateStaticParams() {
+  return Object.keys(POSTS).map((slug) => ({ slug }));
+}
+
+export default function BlogPostPage({ params }: { params: { slug: string } }) {
+  const post = POSTS[params.slug];
+  if (!post) notFound();
+
+  return (
+    <div className="min-h-screen pt-24">
+      {/* Hero image */}
+      <div className="w-full h-[55vh] lg:h-[70vh] overflow-hidden relative">
+        <img
+          src={post.img}
+          alt={post.title}
+          className="w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(to top, rgba(6,6,6,0.6) 0%, transparent 60%)" }}
+        />
+      </div>
+
+      {/* Article */}
+      <div className="max-w-3xl mx-auto px-6 py-16 lg:py-24">
+        {/* Back */}
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase mb-12 transition-colors duration-300"
+          style={{ color: "var(--fg-muted)" }}
+        >
+          <ArrowLeft size={11} /> Back to Journal
+        </Link>
+
+        {/* Meta */}
+        <p className="text-[10px] tracking-[0.35em] uppercase mb-5" style={{ color: "var(--gold)" }}>
+          {post.category} · {post.date} · {post.readTime} read
+        </p>
+
+        {/* Title */}
+        <h1
+          className="font-display font-light leading-tight mb-8"
+          style={{ fontSize: "clamp(2.2rem, 6vw, 4rem)", color: "var(--fg)" }}
+        >
+          {post.title}
+        </h1>
+
+        {/* Intro */}
+        <p
+          className="font-display font-light italic leading-relaxed mb-12 pb-12 border-b"
+          style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", color: "var(--fg-muted)", borderColor: "var(--border)" }}
+        >
+          {post.intro}
+        </p>
+
+        {/* Body */}
+        <div className="flex flex-col gap-8">
+          {post.body.map((block, i) => (
+            <div key={i}>
+              {block.heading && (
+                <h2
+                  className="font-display font-light mb-4"
+                  style={{ fontSize: "clamp(1.3rem, 3vw, 1.8rem)", color: "var(--fg)" }}
+                >
+                  {block.heading}
+                </h2>
+              )}
+              <p className="text-base leading-relaxed" style={{ color: "var(--fg-muted)", lineHeight: "1.9" }}>
+                {block.text}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom bar */}
+        <div className="mt-16 pt-12 border-t flex items-center justify-between" style={{ borderColor: "var(--border)" }}>
+          <p className="text-[10px] tracking-[0.3em] uppercase" style={{ color: "var(--fg-muted)" }}>
+            Distinct Shoot · {post.date}
+          </p>
+          <Link
+            href="/contact"
+            className="text-[10px] tracking-[0.3em] uppercase transition-colors duration-300"
+            style={{ color: "var(--gold)" }}
+          >
+            Book a Session →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
