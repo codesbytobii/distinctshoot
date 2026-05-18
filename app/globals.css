@@ -27,8 +27,17 @@
   --nav-bg: rgba(10,10,10,0.88);
 }
 
-* { box-sizing: border-box; padding: 0; margin: 0; }
-html { scroll-behavior: smooth; }
+* { 
+  box-sizing: border-box; 
+  padding: 0; 
+  margin: 0; 
+}
+
+html { 
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 body {
   background-color: var(--bg);
@@ -39,15 +48,34 @@ body {
   overflow-x: hidden;
 }
 
-::selection { background: var(--gold); color: var(--bg); }
+::selection { 
+  background: var(--gold); 
+  color: var(--bg); 
+}
 
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--gold); }
+::-webkit-scrollbar { 
+  width: 3px; 
+}
 
-.font-display { font-family: 'Fraunces', Georgia, serif; }
-.text-gold { color: var(--gold); }
-.text-muted { color: var(--fg-muted); }
+::-webkit-scrollbar-track { 
+  background: var(--bg); 
+}
+
+::-webkit-scrollbar-thumb { 
+  background: var(--gold); 
+}
+
+.font-display { 
+  font-family: 'Fraunces', Georgia, serif; 
+}
+
+.text-gold { 
+  color: var(--gold); 
+}
+
+.text-muted { 
+  color: var(--fg-muted); 
+}
 
 /* Reveal animation */
 .reveal {
@@ -56,7 +84,11 @@ body {
   transition: opacity 0.85s cubic-bezier(0.76,0,0.24,1),
               transform 0.85s cubic-bezier(0.76,0,0.24,1);
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+
+.reveal.visible { 
+  opacity: 1; 
+  transform: translateY(0); 
+}
 
 /* Lightbox */
 .lightbox-overlay {
@@ -69,10 +101,141 @@ body {
   justify-content: center;
   animation: fadeIn 0.3s ease;
 }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes fadeIn { 
+  from { opacity: 0; } 
+  to { opacity: 1; } 
+}
 
 .lightbox-img {
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.76,0,0.24,1);
 }
-.lightbox-img.sliding { opacity: 0; transform: translateX(40px); }
-.lightbox-img.sliding-back { opacity: 0; transform: translateX(-40px); }
+
+.lightbox-img.sliding { 
+  opacity: 0; 
+  transform: translateX(40px); 
+}
+
+.lightbox-img.sliding-back { 
+  opacity: 0; 
+  transform: translateX(-40px); 
+}
+
+/* Next.js Image Optimization Styles */
+.next-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+}
+
+/* Prevent layout shift for images */
+.next-image-wrapper > span {
+  position: absolute !important;
+  inset: 0 !important;
+}
+
+/* Image loading placeholder */
+.image-loading {
+  filter: blur(10px);
+  transform: scale(1.02);
+  transition: filter 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.image-loaded {
+  filter: blur(0);
+  transform: scale(1);
+}
+
+/* Optimize animations for performance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Lazy loading blur effect */
+.blur-up {
+  filter: blur(5px);
+  transition: filter 0.2s ease-out;
+}
+
+.blur-up.lazyloaded {
+  filter: blur(0);
+}
+
+/* Responsive image containers */
+.img-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.img-container.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.img-container.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+.img-container.asport-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+/* Priority image optimization */
+.priority-image {
+  will-change: transform;
+  content-visibility: auto;
+}
+
+/* Background image optimization for hero */
+.hero-bg {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Font optimization - prevent FOIT (Flash of Invisible Text) */
+@media (font-display: optional) {
+  @font-face {
+    font-family: 'Cabinet Grotesk';
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Fraunces';
+    font-display: swap;
+  }
+}
+
+/* Reduce CLS (Cumulative Layout Shift) */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Optional: Add a subtle skeleton loading state */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    var(--border) 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
